@@ -28,6 +28,7 @@ class Appointment {
     this.id = uuid();
     this.provider = provider;
     this.date = date;
+    //
   }
 
   */
