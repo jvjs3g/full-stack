@@ -4,14 +4,20 @@ import AppError from '@shared/errors/AppError';
 
 import IAppointmentRepository from '../repositories/IAppintmentRepository';
 
+import { injectable, inject } from 'tsyringe';
+
 interface IRequest{
   provider_id:string;
   date:Date;
 }
 
+@injectable()
 class CreateAppointmentService{
 
-  constructor(private appointmentRepository:IAppointmentRepository){
+  constructor(
+    @inject('AppointmentRepository')
+    private appointmentRepository:IAppointmentRepository,
+    ){
 
   }
 
