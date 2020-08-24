@@ -13,7 +13,6 @@ interface IRequest{
 
 @injectable()
 class CreateAppointmentService{
-
   constructor(
     @inject('AppointmentRepository')
     private appointmentRepository:IAppointmentRepository,

@@ -5,15 +5,14 @@ import IUserRepository from "@modules/users/repositories/IUsersRepository";
 import User from '../entities/User';
 
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
-import usersRouter from '../../http/routes/users.routes';
 
 // Data transfer object
 
 class UserRepository implements IUserRepository {
-  private ormRepository: Repository<Appointment>;
+  private ormRepository: Repository<User>;
 
   constructor(){
-    this.ormRepository = getRepository(Appointment);
+    this.ormRepository = getRepository(User);
   }
 
   public async findById(id: string): Promise<User | undefined>{
