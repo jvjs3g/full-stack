@@ -24,8 +24,9 @@ class AuthenticateUserService{
     private usersRepository: IUserRepository,
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-    ){
-
+      ){
+        this.usersRepository = usersRepository;
+        this.hashProvider = hashProvider;
   }
   public async execute({ email, password }:IRequest): Promise<IResponse>{
 
