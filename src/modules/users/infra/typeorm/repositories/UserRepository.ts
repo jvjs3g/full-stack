@@ -6,7 +6,6 @@ import User from '../entities/User';
 
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
-// Data transfer object
 
 class UserRepository implements IUserRepository {
   private ormRepository: Repository<User>;
