@@ -39,5 +39,4 @@ describe('SendForgotPasswordEmail', () => {
     expect(upDatedUser?.password).toBe('123123');
   });
 
-
 });
