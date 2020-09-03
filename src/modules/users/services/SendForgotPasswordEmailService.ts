@@ -35,7 +35,7 @@ class SendForgotPasswordEmailService{
 
     await this.userTokensRepository.generate(user.id);
 
-    await this.mailProvider.sendEmail(email, 'Pedido de recuperação de senha recibido com sucesso')
+    await this.mailProvider.sendEmail(email, 'Pedido de recuperação de senha recibido com sucesso');
   }
 }
 
