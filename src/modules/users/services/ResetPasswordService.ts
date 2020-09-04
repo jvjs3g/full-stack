@@ -1,5 +1,5 @@
 import { injectable, inject } from'tsyringe';
-import {differenceInHours, isAfter, addHours } from 'date-fns';
+import { isAfter, addHours } from 'date-fns';
 import IUserRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokenReposory';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';

@@ -15,7 +15,7 @@ import '@shared/container';
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/files',express.static(uploadConfig.tmpFolder));// servir as pastas de moto statico para o usuario
+app.use('/files',express.static(uploadConfig.uploadsFolder));// servir as pastas de moto statico para o usuario
 app.use(routes);
 app.use( (err:Error,request:Request,response:Response, _:NextFunction) =>{
   if(err instanceof AppError){
