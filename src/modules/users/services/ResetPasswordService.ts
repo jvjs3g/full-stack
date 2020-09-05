@@ -15,15 +15,14 @@ interface Request{
 class ResetPasswordService{
   constructor(
     @inject('UsersRepository')
-    private usersRepository:IUserRepository,
+    private usersRepository: IUserRepository,
+
     @inject('UserTokensRepository')
     private userTokensRepository: IUserTokensRepository,
+
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-
-    ){
-
-  }
+  ) {}
   public async execute({ token, password }: Request):Promise<void>{
     const userToken = await this.userTokensRepository.findByToken(token);
 
