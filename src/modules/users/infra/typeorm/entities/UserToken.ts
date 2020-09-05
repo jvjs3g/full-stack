@@ -1,6 +1,13 @@
-import { Entity, Generated , Column, PrimaryGeneratedColumn,CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Generated,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity('user_Tokens')
+@Entity('user_tokens')
 class UserToken {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -13,19 +20,10 @@ class UserToken {
   user_id: string;
 
   @CreateDateColumn()
-  created_at:Date;
-
+  created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
-
-/*  constructor({ provider, date}: Omit<UserToken, 'id'>){
-    this.id = uuid();
-    this.provider = provider;
-    this.date = date;
-  }
-
-  */
 }
 
-export default UserToken;
+export default UserToken
