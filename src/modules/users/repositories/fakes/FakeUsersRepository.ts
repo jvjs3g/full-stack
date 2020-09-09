@@ -5,6 +5,7 @@ import IUserRepository from "@modules/users/repositories/IUsersRepository";
 import User from '../../infra/typeorm/entities/User';
 
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import IFinadAllProvider from '@modules/users/dtos/IFindAllProviderDTO';
 
 // Data transfer object
 
@@ -22,6 +23,16 @@ class UserRepository implements IUserRepository {
     const findUser  = this.users.find(user =>user.email == email );
 
     return findUser;
+  }
+
+  public async findAllProviders({excep_user_id}:IFinadAllProvider): Promise<User[]>{
+    let users = this.users;
+
+    if(excep_user_id){
+      users = this.users.filter(user => user.id !== excep_user_id);
+    }
+
+    return users;
   }
 
   public async create( userData: ICreateUserDTO): Promise<User>{
