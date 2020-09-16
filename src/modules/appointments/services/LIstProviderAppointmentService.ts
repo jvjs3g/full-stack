@@ -1,10 +1,10 @@
 import { injectable, inject } from 'tsyringe';
-import Appointments from '../infra/typeorm/entities/Appointment';
+import Appointment from '../infra/typeorm/entities/Appointment';
 import IAppointmentRepository from '../repositories/IAppintmentRepository';
 
 interface Request{
  provider_id: string;
- day: number;
+ day:number;
  month: number;
  year: number;
 }
@@ -19,16 +19,15 @@ class LIstProviderAppointmentService{
 
     public async execute({
       provider_id,
-      day,
       month,
       year,
-    }: Request): Promise<Appointments[]> {
-
+      day,
+    }: Request): Promise<Appointment[]> {
       const appointments = await this.appointmentRepository.findAllDayFromProvider({
-       provider_id,
-       month,
-       day,
-       year
+        provider_id,
+        month,
+        year,
+        day,
       });
 
       return appointments;
