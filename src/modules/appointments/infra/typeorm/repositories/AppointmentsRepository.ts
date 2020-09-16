@@ -48,9 +48,6 @@ class AppointmentsRepository  implements IAppointmentRepository {
   }
 
 
-
-
-
   public async findAllDayFromProvider({provider_id, day,  month, year  }:IFindAllDayFromProviderDTO): Promise<Appointment[]>{
 
     const parsedDay = String(day).padStart(2, '0');
