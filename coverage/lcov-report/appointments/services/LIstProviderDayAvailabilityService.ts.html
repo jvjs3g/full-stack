@@ -119,10 +119,7 @@
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L63'></a><a href='#L63'>63</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,26 +155,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -188,14 +182,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { injectable, inject } from 'tsyringe';
-import { isAfter, getHours } from 'date-fns';
-import IAppointmentRepository from '../repositories/IAppintmentRepository';
+import { getHours, isAfter } from 'date-fns';
+import IAppointmentsRepository from '../repositories/IAppintmentRepository';
 &nbsp;
-interface Request{
- provider_id: string;
- day: number;
- month: number;
- year: number;
+interface IRequest {
+  provider_id: string;
+  day: number;
+  month: number;
+  year: number;
 }
 &nbsp;
 type IResponse = Array&lt;{
@@ -204,54 +198,51 @@ type IResponse = Array&lt;{
 }&gt;;
 &nbsp;
 @injectable()
-class LIstProviderDayAvailabilityService{
+class ListProviderDayAvailabilityService {
   constructor(
     @inject('AppointmentRepository')
-    private appointmentRepository:IAppointmentRepository,
-    ){}
+    private appointmentsRepository: IAppointmentsRepository,
+  ) {}
 &nbsp;
-    public async execute({
-      provider_id,
-      day,
-      month,
-      year,
-    }: Request): Promise&lt;IResponse&gt; {
-      const appointments = await this.appointmentRepository.findAllDayFromProvider({
+  public async execute({
+    provider_id,
+    day,
+    month,
+    year,
+  }: IRequest): Promise&lt;IResponse&gt; {
+    const appointments = await this.appointmentsRepository.findAllDayFromProvider(
+      {
         provider_id,
-        day,
-        month,
         year,
-      });
+        month,
+        day,
+      },
+    );
 &nbsp;
-      const hourStart = 8;
+    const hourStart = 8;
+    const eachHourArray = Array.from(
+      { length: 10 },
+      (_, index) =&gt; index + hourStart,
+    );
 &nbsp;
-      const eachHoursArray = Array.from(
-        { length: 10 },
-        (_, index) =&gt; index + hourStart,
+    const currentDate = new Date(Date.now());
+    const availability = eachHourArray.map(hour =&gt; {
+      const hasAppointmentInHour = appointments.find(
+        appointment =&gt; getHours(appointment.date) === hour,
       );
 &nbsp;
-      const currentDate = new Date(Date.now());
+      const compareDate = new Date(year, month - 1, day, hour);
 &nbsp;
-&nbsp;
-      const availability = eachHoursArray.map(hour =&gt; {
-        const hasAppointmentInHour = appointments.find(
-          appointment =&gt; getHours(appointment.date) == hour,
-        );
-&nbsp;
-&nbsp;
-        const compareDate  = new Date(year, month - 1, day,  hour);
-&nbsp;
-        return {
-          hour,
-          available: !hasAppointmentInHour &amp;&amp; isAfter(compareDate, currentDate),
-        };
-      });
-&nbsp;
-      return availability;
-    }
+      return {
+        hour,
+        available: !hasAppointmentInHour &amp;&amp; isAfter(compareDate, currentDate),
+      };
+    });
+    return availability;
+  }
 }
 &nbsp;
-export default LIstProviderDayAvailabilityService;
+export default ListProviderDayAvailabilityService;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -259,7 +250,7 @@ export default LIstProviderDayAvailabilityService;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Sep 14 2020 21:36:31 GMT-0300 (GMT-03:00)
+                at Wed Sep 16 2020 21:35:51 GMT-0300 (GMT-03:00)
             </div>
         </div>
         <script src="../../prettify.js"></script>
