@@ -11,7 +11,7 @@ const sessionsController = new SessionsController();
 sessionsRouter.post('/',celebrate({
   [Segments.BODY]:{
     email: Joi.string().email().required(),
-    passoword: Joi.string().required(),
+    password: Joi.string().required(),
   }
 }), sessionsController.create);
 
