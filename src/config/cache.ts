@@ -1,4 +1,4 @@
-import { Re} from 'ioredis'
+import { RedisOptions} from 'ioredis'
 
 interface iCacheConfig {
   driver: 'redis';
