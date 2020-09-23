@@ -14,7 +14,20 @@ class S3StorageProvider implements IStorageProvider {
   }
 
   public async saveFile(file: string) : Promise<string> {
-    const originalPath = path.resolve(uploadConfig.tmpFolder, file) ;
+    const originalPath = path.resolve(uploadConfig.tmpFolder, file);
+
+    const fileContent = await fs.promises.readFile(originalPath, {
+      encoding:'utf-8',
+    });
+
+    await this.client.putObject({
+      Bucket: 'app-gobarber-2',
+      Key: file,
+      ACL: 'public-read',
+      Body: fileContent,
+    }).promise();
+
+    return file;
   }
 
 
