@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 import User from '@modules/users/infra/typeorm/entities/User';
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
 
@@ -10,15 +11,26 @@ class LIstProviderService{
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUserRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider:ICacheProvider,
     ){
 
   }
   public async execute({ user_id  } :Request ): Promise<User[]> {
-    const  users = await this.usersRepository.findAllProviders({
-      excep_user_id:user_id,
-    });
 
-    return  users;
+    let users  = await this.cacheProvider.recover<User[]>(`providers-list:${user_id}`);
+
+    if(!users){
+      users = await this.usersRepository.findAllProviders({
+        excep_user_id:user_id,
+      });
+      console.log('A query no banco foi feita');
+      await this.cacheProvider.save(`providers-list:${user_id}`, users);
+
+    }
+
+    return users;
   }
 }
 

@@ -48,7 +48,6 @@ class User {
         return null;
       }
 
-    return this.avatar ? : null;
   }
 
 /*  constructor({ provider, date}: Omit<User, 'id'>){
