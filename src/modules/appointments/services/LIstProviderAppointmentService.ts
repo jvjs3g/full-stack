@@ -28,7 +28,7 @@ class LIstProviderAppointmentService{
       day,
     }: Request): Promise<Appointment[]> {
 
-      const cacheKey = `provider-appointment:${provider_id}:${year}-${month}-${day}`;
+      const cacheKey = `provider-appointments:${provider_id}:${year}-${month}-${day}`;
 
       let appointments = await this.cacheProvider.recover<Appointment[]> (cacheKey);
 
@@ -40,7 +40,7 @@ class LIstProviderAppointmentService{
           day,
         });
 
-        console.log('ok'); // não esta cheando aqui
+        console.log('buscou no banco');
         await this.cacheProvider.save(cacheKey, appointments);
       }
 
