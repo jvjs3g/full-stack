@@ -52,6 +52,7 @@ class LIstProviderMothAvailabilityService{
         };
       });
 
+
       return appointmentsAvailability;
     }
 }
