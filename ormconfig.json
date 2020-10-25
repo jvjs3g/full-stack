@@ -5,7 +5,7 @@
     "port":"5432",
     "username":"postgres",
     "password":"docker",
-    "database":"gostack_postgres",
+    "database":"facedev",
 
     "entities": [
       "./src/modules/**/infra/typeorm/entities/*.ts"
@@ -16,17 +16,5 @@
     "cli": {
       "migrationsDir": "./src/shared/infra/typeorm/migrations"
     }
-  },
-
-  {
-    "name":"mongo",
-    "type":"mongodb",
-    "host":"192.168.99.100",
-    "port":"27017",
-    "database":"gobarber",
-    "useUnifiedTopology":"true",
-    "entities": [
-      "./src/modules/**/infra/typeorm/schemas/*.ts"
-    ]
   }
 ]
